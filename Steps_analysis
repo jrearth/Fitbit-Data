@@ -14,3 +14,7 @@ g + geom_histogram(binwidth = 2500) + theme(axis.text = element_text(size = 12),
 summary(AvgDay$total.steps)
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       0    6778   10400    9354   12810   21190
+
+summary (AvgDay$mean.steps)
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##  0.1424 30.7000 37.3800 37.3800 46.1600 73.5900       8
