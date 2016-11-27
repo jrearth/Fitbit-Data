@@ -1,0 +1,11 @@
+##First we need to access the data and turn it into a readable format.
+
+activityData <- read.csv ("activity.csv", header = T, sep = ",", stringsAsFactors = F)
+
+##Next we need to do conversion 
+activityData$date <- as.Date(activityData$date, "%Y-%m-%d")
+str(activityData)
+
+##next check to see the dimensions
+dim(activitydata)
+head(activityData)
