@@ -1,0 +1,31 @@
+## Here we will remove the missing Values and create a new histogram with it called FreqstepsRR
+mean(is.na(activityData$steps))
+sum(is.na(activityData$steps))
+## we now know how much info is missing around 13% of the data is missing. We must check where the missing values are 
+sum(is.na(AvgInterval$mean.steps))
+newData <- activityData
+for (i in 1:nrow(newData)) {
+      if (is.na(newData$steps[i])) {
+            index <- newData$interval[i]
+            value <- subset(AvgInterval, interval==index)
+            newData$steps[i] <- value$mean.steps
+      }
+}
+head(newData)
+newAvg <- newData %>% group_by(date) %>%
+      summarize(total.steps = sum(steps, na.rm = T)
+## with this we have created a new data set without the missing values so we need to construct a new historgram to show this new data off.
+g <- ggplot(newAvg, aes(x=total.steps))
+g + geom_histogram(binwidth = 2500) + theme(axis.text = element_text(size = 12),
+      axis.title = element_text(size = 14)) + labs(y = "Frequency") + labs(x = "Total steps/day")
+##Let's summerize the data now
+summary (AvgDay$total.steps)
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0    6778   10400    9354   12810   21190
+sd(AvgDay$total.steps, na.rm=T)
+## [1] 5405.895
+summary (newAvg$total.steps)
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    9819   10770   10770   12810   21190
+sd(newAvg$total.steps, na.rm=T)
+## [1] 3974.391
