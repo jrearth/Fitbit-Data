@@ -1,0 +1,31 @@
+##Here is the process for finding a comparison between weekend and weekday.
+newData$day <- ifelse(weekdays(newData$date) %in% c("Saturday", "Sunday"), "weekend", "weekday")
+
+##this assigns the value of each step to a day. Next we create 2 subsets
+wkend <- filter(newData, day == "weekend")
+wkday <- filter(newData, day == "weekday")
+
+##Next we create the intervals for the subsets so they have a designed value.
+wkend <- wkend %>%
+      group_by(interval) %>%
+      summarize(mean.steps = mean(steps)) 
+wkend$day <- "weekend"
+
+wkday <- wkday %>%
+      group_by(interval) %>%
+      summarize(mean.steps = mean(steps)) 
+wkday$day <- "weekday"
+
+newInterval <- rbind(wkend, wkday)
+newInterval$day <- as.factor(newInterval$day)
+newInterval$day <- relevel(newInterval$day, "weekend")
+
+##Next create a plot.
+g <- ggplot (newInterval, aes (interval, mean.steps))
+g + geom_line() + facet_grid (day~.) + theme(axis.text = element_text(size = 12), 
+      axis.title = element_text(size = 14)) + labs(y = "Number of Steps") + labs(x = "Interval")
+      
+##We observe that, as expected, the activity profiles between weekdays and weekends greatly differ. 
+##During the weekdays, activity peaks in the morning between 7 and 9 and then the activity remains below ~100 steps. 
+##In contrast, the weekend data does not show a period with particularly high level of activity, but the activity remains higher than the weekday activity at most times and in several instances 
+##it surpases the 100 steps mark and it is overall more evenly distributed throughout the day.
