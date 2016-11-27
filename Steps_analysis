@@ -9,3 +9,8 @@ library(ggplot2)
 g <- ggplot(AvgDay, aes(x=total.steps))
 g + geom_histogram(binwidth = 2500) + theme(axis.text = element_text(size = 12),  
       axis.title = element_text(size = 14)) + labs(y = "Frequency") + labs(x = "Total steps/day")
+
+## now we can summerize the data 
+summary(AvgDay$total.steps)
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0    6778   10400    9354   12810   21190
