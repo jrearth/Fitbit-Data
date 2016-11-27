@@ -1,0 +1,8 @@
+AvgInterval <- activityData %>% group_by(interval) %>%
+      summarize(mean.steps = mean(steps, na.rm = T))
+g <- ggplot(AvgInterval, aes(x = interval, y = mean.steps))
+g + geom_line() + theme(axis.text = element_text(size = 12), 
+      axis.title = element_text(size = 14, face = "bold")) + 
+      labs(y = "Mean number of steps") + labs(x = "Interval")
+
+##With Histogram we see highest average is between 500-100 most frequent is 206 at interval 835
