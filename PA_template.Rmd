@@ -7,18 +7,21 @@ output:
 
 
 ## Loading and preprocessing the data
+{'''r}
 activityData <- read.csv ("activity.csv", header = T, sep = ",", stringsAsFactors = F)
 activityData$date <- as.Date(activityData$date, "%Y-%m-%d")
 str(activityData)
-
+{'''r}
 ## What is mean total number of steps taken per day?
+{'''r}
 library (dplyr)
 AvgDay <- activityData %>% group_by(date) %>%
           summarize(total.steps = sum(steps, na.rm = T), 
                   mean.steps = mean(steps, na.rm = T))
-
+{'''r}
 
 ## What is the average daily activity pattern?
+{'''r}
 sum(is.na(AvgInterval$mean.steps))
 newData <- activityData
 for (i in 1:nrow(newData)) {
@@ -26,9 +29,10 @@ for (i in 1:nrow(newData)) {
             index <- newData$interval[i]
             value <- subset(AvgInterval, interval==index)
             newData$steps[i] <- value$mean.steps
-
+{'''r}
 
 ## Imputing missing values
+{'''r}
 sum(is.na(AvgInterval$mean.steps))
 newData <- activityData
 for (i in 1:nrow(newData)) {
@@ -38,9 +42,10 @@ for (i in 1:nrow(newData)) {
             newData$steps[i] <- value$mean.steps
       }
 }
-
+{'''r}
 
 ## Are there differences in activity patterns between weekdays and weekends?
+{'''r}
 newData$day <- ifelse(weekdays(newData$date) %in% c("Saturday", "Sunday"), "weekend", "weekday")
 wkend <- filter(newData, day == "weekend")
 wkday <- filter(newData, day == "weekday")
@@ -53,3 +58,4 @@ wkday <- wkday %>%
       group_by(interval) %>%
       summarize(mean.steps = mean(steps)) 
 wkday$day <- "weekday"
+{'''r}
